@@ -1,0 +1,11 @@
+{
+  "name": "search-destroy",
+  "version": "1.0.0",
+  "description": "scrape data and search for it via google",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
