@@ -1,14 +1,19 @@
-const cheerio = require('cheerio')
+const request = require('request');
+const cheerio = require('cheerio');
 const fs = require('fs');
-const $ = cheerio.load('<h2 class="title">Hello world</h2>')
+const writeStream = fs.createWriteStream('index.html');
 
-$('h1.title').text('Hello world!')
-$('h1').addClass('welcome')
+request('https://www.badmovies.org/', (error, response, html) => {
+    if (!error && response.statusCode == 200) {
+        const $ = cheerio.load(html);
 
-fs.writeFile('index.html', $.html(), function(err) {
-    if(err) {
-        return console.log(err);
+        $('.contab0').each((i, el) => {
+            const title = $(el)
+            .find('.titlebox0')
+            .text()
+            writeStream.write(`<li>${title}</li>`);
+        });
+
+        console.log('Scraping Done...');
     }
-
-    console.log('The file was saved!');
-}); 
+});
